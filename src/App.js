@@ -1,27 +1,34 @@
-import React, { Fragment, Component, useState } from 'react';
+import React, { Fragment, Component } from 'react';
 import './App.css';
 
 // first we will make a new context
 const MyContext = React.createContext();
 
 // Then create a provider Component
-const MyProvider = (props) => {
+class MyProvider extends Component {
+  state = { latitude: null, longitude: null };
 
-const [age, setAge] = useState(100);
+  componentDidMount() {
+    window.navigator.geolocation.getCurrentPosition(success =>
+      this.setState({
+        latitude: success.coords.latitude,
+        longitude: success.coords.longitude
+      })
+    );
+  }
 
+  render() {
     return (
       <MyContext.Provider
         value={{
-          state: setAge,
-          getLocation: () =>
-            setAge(
-              age + 1
-            )
+          latitude: this.state.latitude,
+          longitude: this.state.longitude
         }}
       >
-        {props.children}
+        {this.props.children}
       </MyContext.Provider>
     );
+  }
 }
 
 const App = () => {
@@ -31,7 +38,8 @@ const App = () => {
         <MyContext.Consumer>
           {context => (
             <Fragment>
-              <p>Age: {context.age}</p>
+              <p>Latitude: {context.latitude}</p>
+              <p>Longitude: {context.longitude}</p>
               <button onClick={context.getLocation}>Click Here</button>
             </Fragment>
           )}
