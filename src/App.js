@@ -8,21 +8,20 @@ const MyContext = React.createContext();
 class MyProvider extends Component {
   state = { latitude: null, longitude: null };
 
-  componentDidMount() {
-    window.navigator.geolocation.getCurrentPosition(success =>
-      this.setState({
-        latitude: success.coords.latitude,
-        longitude: success.coords.longitude
-      })
-    );
-  }
-
   render() {
     return (
       <MyContext.Provider
         value={{
           latitude: this.state.latitude,
-          longitude: this.state.longitude
+          longitude: this.state.longitude,
+          getLocation: () => {
+            window.navigator.geolocation.getCurrentPosition(success =>
+              this.setState({
+                latitude: success.coords.latitude,
+                longitude: success.coords.longitude
+              })
+            );
+          }
         }}
       >
         {this.props.children}
@@ -40,7 +39,7 @@ const App = () => {
             <Fragment>
               <p>Latitude: {context.latitude}</p>
               <p>Longitude: {context.longitude}</p>
-              <button onClick={context.getLocation}>Click Here</button>
+              <button onClick={context.getLocation}>Current Weather</button>
             </Fragment>
           )}
         </MyContext.Consumer>
