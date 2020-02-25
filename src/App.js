@@ -6,7 +6,12 @@ const MyContext = React.createContext();
 
 // Then create a provider Component
 class MyProvider extends Component {
-  state = { latitude: null, longitude: null };
+  state = {
+    latitude: null,
+    longitude: null,
+    weather: {},
+    error: null
+  };
 
   render() {
     return (
@@ -14,6 +19,7 @@ class MyProvider extends Component {
         value={{
           latitude: this.state.latitude,
           longitude: this.state.longitude,
+          weather: this.state,
           getLocation: () => {
             window.navigator.geolocation.getCurrentPosition(success =>
               this.setState({
@@ -21,6 +27,21 @@ class MyProvider extends Component {
                 longitude: success.coords.longitude
               })
             );
+            setTimeout(() => {
+              fetch(
+                'https://api.openweathermap.org/data/2.5/weather?lat=' +
+                  this.state.latitude +
+                  '&lon=' +
+                  this.state.longitude +
+                  '&appid=1eab387463d70063b7d8296fa6d64c9b'
+              )
+                .then(res => res.json())
+                .then(result => {
+                  this.setState({
+                    weather: result
+                  });
+                });
+            }, 1000);
           }
         }}
       >
