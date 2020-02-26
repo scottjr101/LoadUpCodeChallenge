@@ -9,7 +9,7 @@ class MyProvider extends Component {
   state = {
     latitude: null,
     longitude: null,
-    weather: {},
+    weather: [],
     error: null
   };
 
@@ -19,7 +19,7 @@ class MyProvider extends Component {
         value={{
           latitude: this.state.latitude,
           longitude: this.state.longitude,
-          weather: this.state,
+          weather: this.state.weather,
           getLocation: () => {
             window.navigator.geolocation.getCurrentPosition(success =>
               this.setState({
@@ -38,10 +38,11 @@ class MyProvider extends Component {
                 .then(res => res.json())
                 .then(result => {
                   this.setState({
-                    weather: result
+                    weather: [result]
                   });
-                });
-            }, 1000);
+                })
+                .catch(error => this.setState({ error }));
+            }, 500);
           }
         }}
       >
@@ -60,6 +61,12 @@ const App = () => {
             <Fragment>
               <p>Latitude: {context.latitude}</p>
               <p>Longitude: {context.longitude}</p>
+              {context.weather.map(data =>
+              <Fragment>
+              <p key={data.id}>City: {data.name}</p>
+              <p key={data.id}>Temp: {data.main.temp}</p>
+              </Fragment>
+                )}
               <button onClick={context.getLocation}>Current Weather</button>
             </Fragment>
           )}
