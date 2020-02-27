@@ -1,4 +1,5 @@
 import React, { Fragment, Component } from 'react';
+import Moment from 'react-moment';
 import './App.css';
 
 // first we will make a new context
@@ -17,8 +18,6 @@ class MyProvider extends Component {
     return (
       <MyContext.Provider
         value={{
-          latitude: this.state.latitude,
-          longitude: this.state.longitude,
           weather: this.state.weather,
           getLocation: () => {
             window.navigator.geolocation.getCurrentPosition(success =>
@@ -33,7 +32,7 @@ class MyProvider extends Component {
                   this.state.latitude +
                   '&lon=' +
                   this.state.longitude +
-                  '&appid=1eab387463d70063b7d8296fa6d64c9b'
+                  '&units=imperial&appid=1eab387463d70063b7d8296fa6d64c9b'
               )
                 .then(res => res.json())
                 .then(result => {
@@ -59,15 +58,78 @@ const App = () => {
         <MyContext.Consumer>
           {context => (
             <Fragment>
-              <p>Latitude: {context.latitude}</p>
-              <p>Longitude: {context.longitude}</p>
-              {context.weather.map(data =>
-              <Fragment>
-              <p key={data.id}>City: {data.name}</p>
-              <p key={data.id}>Temp: {data.main.temp}</p>
-              </Fragment>
-                )}
-              <button onClick={context.getLocation}>Current Weather</button>
+              <div className='container mt-3'>
+                <h1>LoadUp Engineering Coding Challenge</h1>
+                <button
+                  className='btn btn-light-blue'
+                  onClick={context.getLocation}
+                >
+                  Current Weather
+                </button>
+                {context.weather.map(data => (
+                  <Fragment key={data.id}>
+                    <div className='jumbotron card card-image jumboTronbg mt-4'>
+                      <div className='text-white'>
+                        <div>
+                          <h2 className='card-title h1-responsive mb-5 font-bold text-center'>
+                            Weather information from the{' '}
+                            <a href='https://openweathermap.org/'>
+                              OpenWeather API
+                            </a>
+                          </h2>
+                          <div className='row'>
+                            <div className='col-md-6'>
+                              <ul>
+                                <li>City Name: {data.name}</li>
+                                <li>Current Longitude: {data.coord.lon}</li>
+                                <li>Current Latitude: {data.coord.lat}</li>
+                                <li>Current Temp: {data.main.temp} °F</li>
+                                <li>
+                                  Feels Like Temp: {data.main.feels_like} °F
+                                </li>
+                                <li>Minimum Temp: {data.main.temp_min} °F</li>
+                                <li>Maximum Temp: {data.main.temp_max} °F</li>
+                                <li>
+                                  Atmospheric Pressure: {data.main.pressure} hPa
+                                </li>
+                                <li>
+                                  Humidity: {data.main.humidity}{' '}
+                                  <i className='fas fa-percentage' />
+                                </li>
+                                <li>
+                                  Visibility: {data.visibility * 0.0006} miles
+                                </li>
+                                <li>Wind Speed: {data.wind.speed} MPH</li>
+                                <li>Wind Direction: {data.wind.deg} °</li>
+                                <li>
+                                  Weather Condition:{' '}
+                                  {data.weather[0].description}
+                                  <img
+                                    src={`https://openweathermap.org/img/w/${data.weather[0].icon}.png`}
+                                    alt='weather condition'
+                                  />
+                                </li>
+                              </ul>
+                            </div>
+                            <div className='col-md-6'>
+                              <ul>
+                                <li>
+                                  Sunrise:{' '}
+                                  <Moment unix>{data.sys.sunrise}</Moment>{' '}
+                                </li>
+                                <li>
+                                  Sunset:{' '}
+                                  <Moment unix>{data.sys.sunset}</Moment>{' '}
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Fragment>
+                ))}
+              </div>
             </Fragment>
           )}
         </MyContext.Consumer>
