@@ -20,28 +20,30 @@ class MyProvider extends Component {
         value={{
           weather: this.state.weather,
           getLocation: () => {
-            window.navigator.geolocation.getCurrentPosition(success =>
-              this.setState({
-                latitude: success.coords.latitude,
-                longitude: success.coords.longitude
-              })
-            );
-            setTimeout(() => {
-              fetch(
-                'https://api.openweathermap.org/data/2.5/weather?lat=' +
-                  this.state.latitude +
-                  '&lon=' +
-                  this.state.longitude +
-                  '&units=imperial&appid=1eab387463d70063b7d8296fa6d64c9b'
-              )
-                .then(res => res.json())
-                .then(result => {
-                  this.setState({
-                    weather: [result]
-                  });
-                })
-                .catch(error => this.setState({ error }));
-            }, 500);
+            if (!window.navigator.geolocation) {
+              alert('Geolocation is not supported by your browser');
+            } else {
+              window.navigator.geolocation.getCurrentPosition(success => {
+                this.setState({
+                  latitude: success.coords.latitude,
+                  longitude: success.coords.longitude
+                });
+                fetch(
+                  'https://api.openweathermap.org/data/2.5/weather?lat=' +
+                    this.state.latitude +
+                    '&lon=' +
+                    this.state.longitude +
+                    '&units=imperial&appid=1eab387463d70063b7d8296fa6d64c9b'
+                )
+                  .then(res => res.json())
+                  .then(result => {
+                    this.setState({
+                      weather: [result]
+                    });
+                  })
+                  .catch(error => this.setState({ error }));
+              });
+            }
           }
         }}
       >
@@ -58,25 +60,29 @@ const App = () => {
         <MyContext.Consumer>
           {context => (
             <Fragment>
-              <div className='container mt-3'>
-                <h1>LoadUp Engineering Coding Challenge</h1>
-                <button
-                  className='btn btn-light-blue'
-                  onClick={context.getLocation}
-                >
-                  Current Weather
-                </button>
+              <div className='container mt-4'>
+                <div className='text-center'>
+                  <h1 className='mb-3 customFont'>
+                    LoadUp Engineering Coding Challenge
+                  </h1>
+                  <button
+                    className='btn btn-light-blue'
+                    onClick={context.getLocation}
+                  >
+                    Current Weather
+                  </button>
+                </div>
                 {context.weather.map(data => (
                   <Fragment key={data.id}>
                     <div className='jumbotron card card-image jumboTronbg mt-4'>
                       <div className='text-white'>
                         <div>
-                          <h2 className='card-title h1-responsive mb-5 font-bold text-center'>
+                          <h1 className='card-title h1-responsive mb-5 font-bold text-center'>
                             Weather information from the{' '}
                             <a href='https://openweathermap.org/'>
                               OpenWeather API
                             </a>
-                          </h2>
+                          </h1>
                           <div className='row'>
                             <div className='col-md-6'>
                               <ul>
@@ -89,25 +95,11 @@ const App = () => {
                                 </li>
                                 <li>Minimum Temp: {data.main.temp_min} °F</li>
                                 <li>Maximum Temp: {data.main.temp_max} °F</li>
-                                <li>
-                                  Atmospheric Pressure: {data.main.pressure} hPa
-                                </li>
-                                <li>
-                                  Humidity: {data.main.humidity}{' '}
-                                  <i className='fas fa-percentage' />
-                                </li>
-                                <li>
-                                  Visibility: {data.visibility * 0.0006} miles
-                                </li>
                                 <li>Wind Speed: {data.wind.speed} MPH</li>
                                 <li>Wind Direction: {data.wind.deg} °</li>
                                 <li>
-                                  Weather Condition:{' '}
-                                  {data.weather[0].description}
-                                  <img
-                                    src={`https://openweathermap.org/img/w/${data.weather[0].icon}.png`}
-                                    alt='weather condition'
-                                  />
+                                  Wind Gust: {data.wind.gust}{' '}
+                                  <i className='fas fa-wind' />
                                 </li>
                               </ul>
                             </div>
@@ -120,6 +112,28 @@ const App = () => {
                                 <li>
                                   Sunset:{' '}
                                   <Moment unix>{data.sys.sunset}</Moment>{' '}
+                                </li>
+                                <li>
+                                  Humidity: {data.main.humidity}{' '}
+                                  <i className='fas fa-percentage' />
+                                </li>
+                                <li>
+                                  Atmospheric Pressure: {data.main.pressure} hPa
+                                </li>
+                                <li>
+                                  Visibility: {data.visibility * 0.0006} miles
+                                </li>
+                                <li>
+                                  Cloudiness: {data.clouds.all}{' '}
+                                  <i className='fas fa-percentage' />
+                                </li>
+                                <li>
+                                  Weather Condition:{' '}
+                                  {data.weather[0].description}
+                                  <img
+                                    src={`https://openweathermap.org/img/w/${data.weather[0].icon}.png`}
+                                    alt='weather condition'
+                                  />
                                 </li>
                               </ul>
                             </div>
