@@ -5,4 +5,13 @@ body {
 }
 .jumboTronbg{
   background-image: url('https://mdbootstrap.com/img/Photos/Others/gradient1.jpg');
+  background-size: cover;
+}
+@import url('https://fonts.googleapis.com/css?family=Trade+Winds&display=swap');
+.customFont{
+  font-family: 'Trade Winds';
+  font-size: 3.5rem;
+}
+li {
+  font-size: large;
 }
