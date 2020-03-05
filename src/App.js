@@ -79,10 +79,14 @@ const Weather = () => {
                           <li>Maximum Temp: {data.main.temp_max} °F</li>
                           <li>Wind Speed: {data.wind.speed} MPH</li>
                           <li>Wind Direction: {data.wind.deg} °</li>
-                          <li>
-                            Wind Gust: {data.wind.gust}{' '}
-                            <i className='fas fa-wind' />
-                          </li>
+                          {data.wind.gust === undefined ? (
+                            <li>Wind Gust: N/A</li>
+                          ) : (
+                            <li>
+                              Wind Gust: {data.wind.gust}{' '}
+                              <i className='fas fa-wind' />
+                            </li>
+                          )}
                         </ul>
                       </div>
                       <div className='col-md-6'>
@@ -100,11 +104,24 @@ const Weather = () => {
                           <li>
                             Atmospheric Pressure: {data.main.pressure} hPa
                           </li>
-                          <li>Visibility: {data.visibility * 0.0006} miles</li>
+                          <li>
+                            Visibility: {Math.round(data.visibility * 0.0006)}{' '}
+                            miles
+                          </li>
                           <li>
                             Cloudiness: {data.clouds.all}{' '}
                             <i className='fas fa-percentage' />
                           </li>
+                          {data.weather[0].main === 'Rain' ? (
+                            <li>
+                              Rainfall in the past hour:{' '}
+                              {Math.ceil(data.rain['1h'] * 0.0393 * 1000) /
+                                1000}{' '}
+                              inches
+                            </li>
+                          ) : (
+                            <li>Rainfall in the past hour: N/A</li>
+                          )}
                           <li>
                             Weather Condition: {data.weather[0].description}
                             <img
