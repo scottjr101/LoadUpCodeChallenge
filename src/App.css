@@ -3,15 +3,19 @@ body {
   background-size: cover;
   background-attachment: fixed;
 }
-.jumboTronbg{
+.jumboTronbg {
   background-image: url('https://mdbootstrap.com/img/Photos/Others/gradient1.jpg');
   background-size: cover;
 }
 @import url('https://fonts.googleapis.com/css?family=Trade+Winds&display=swap');
-.customFont{
+.customFont {
   font-family: 'Trade Winds';
   font-size: 3.5rem;
+  color: rgb(0, 87, 248);
 }
 li {
   font-size: large;
+}
+.header {
+  background-color: rgba(127, 174, 216, 0.25);
 }
