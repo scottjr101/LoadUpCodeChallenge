@@ -3,19 +3,20 @@ body {
   background-size: cover;
   background-attachment: fixed;
 }
-.jumboTronbg {
-  background-image: url('https://mdbootstrap.com/img/Photos/Others/gradient1.jpg');
+.cardbg {
+  background-image: url('https://cdn.pixabay.com/photo/2016/04/15/04/02/water-1330252_960_720.jpg');
+  background-size: cover;
+}
+.weatherbg {
+  background-image: url('https://cdn.pixabay.com/photo/2020/02/09/11/59/winter-4832847_960_720.jpg');
   background-size: cover;
 }
 @import url('https://fonts.googleapis.com/css?family=Trade+Winds&display=swap');
 .customFont {
   font-family: 'Trade Winds';
   font-size: 3.5rem;
-  color: rgb(0, 87, 248);
+  color: rgb(0, 63, 180);
 }
 li {
   font-size: large;
-}
-.header {
-  background-color: rgba(127, 174, 216, 0.25);
 }
