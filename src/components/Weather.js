@@ -10,7 +10,7 @@ const Weather = () => {
           <Fragment>
             {context.weather.map(data => (
               <Fragment key={data.id}>
-                <div className='jumbotron card card-image jumboTronbg mt-4'>
+                <div className='card p-4 weatherbg mt-4'>
                   <div className='text-white'>
                     <h1 className='card-title h1-responsive mb-5 font-bold text-center'>
                       Weather information from the{' '}
