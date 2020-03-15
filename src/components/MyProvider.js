@@ -12,35 +12,31 @@ const MyProvider = props => {
   const [toggle, setToggle] = useState(false);
 
   useEffect(() => {
-    if (toggle === false) {
-      console.log('effect 1');
-    } else {
-      window.navigator.geolocation.getCurrentPosition(success => {
-        setLatitude(success.coords.latitude);
-        setLongitude(success.coords.longitude);
-      });
-    }
+    toggle === false
+      ? console.log('effect 1')
+      : window.navigator.geolocation.getCurrentPosition(success => {
+          setLatitude(success.coords.latitude);
+          setLongitude(success.coords.longitude);
+        });
   }, [toggle, setLatitude, setLongitude]);
 
   useEffect(() => {
-    if (longitude === null) {
-      console.log('effect 2');
-    } else {
-      fetch(
-        'https://api.openweathermap.org/data/2.5/weather?lat=' +
-          latitude +
-          '&lon=' +
-          longitude +
-          '&units=imperial&appid=1eab387463d70063b7d8296fa6d64c9b'
-      )
-        .then(res => res.json())
-        .then(result => setWeather([result]))
-        .catch(error => setError(error));
-    }
+    latitude === null || longitude === null
+      ? console.log('effect 2')
+      : fetch(
+          'https://api.openweathermap.org/data/2.5/weather?lat=' +
+            latitude +
+            '&lon=' +
+            longitude +
+            '&units=imperial&appid=1eab387463d70063b7d8296fa6d64c9b'
+        )
+          .then(res => res.json())
+          .then(result => setWeather([result]))
+          .catch(error => setError(error));
   }, [latitude, longitude, setWeather, setError]);
 
   const onClick = () => {
-    setToggle(true)
+    setToggle(true);
   };
 
   return (
