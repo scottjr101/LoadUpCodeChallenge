@@ -8,7 +8,6 @@ const MyProvider = props => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [weather, setWeather] = useState([]);
-  const [setError] = useState(null);
   const [toggle, setToggle] = useState(false);
 
   useEffect(() => {
@@ -32,8 +31,8 @@ const MyProvider = props => {
         )
           .then(res => res.json())
           .then(result => setWeather([result]))
-          .catch(error => setError(error));
-  }, [latitude, longitude, setWeather, setError]);
+          .catch(error => console.log(error));
+  }, [latitude, longitude, setWeather]);
 
   const onClick = () => {
     setToggle(true);
