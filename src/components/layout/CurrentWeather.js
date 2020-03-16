@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { MyContext } from './MyProvider';
+import { MyContext } from '../context/MyProvider';
 
 const CurrentWeather = () => {
   return (

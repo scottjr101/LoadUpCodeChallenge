@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import Moment from 'react-moment';
-import { MyContext } from './MyProvider';
+import { MyContext } from '../context/MyProvider';
 
 const Weather = () => {
   return (
