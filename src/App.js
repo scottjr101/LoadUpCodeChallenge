@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import './App.css';
 import { MyProvider } from './components/MyProvider';
-import { Weather } from './components/Weather';
+import { Weather } from './components/DisplayedWeather';
 import Header from './components/Header';
 import CurrentWeather from './components/CurrentWeather';
 
