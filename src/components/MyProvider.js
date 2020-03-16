@@ -8,20 +8,19 @@ const MyProvider = props => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [weather, setWeather] = useState([]);
-  const [toggle, setToggle] = useState(false);
 
-  useEffect(() => {
-    toggle === false
-      ? console.log('effect 1')
+  const getCoords = () => {
+    !window.navigator.geolocation
+      ? alert('Geolocation is not supported by your browser')
       : window.navigator.geolocation.getCurrentPosition(success => {
           setLatitude(success.coords.latitude);
           setLongitude(success.coords.longitude);
         });
-  }, [toggle, setLatitude, setLongitude]);
+  };
 
   useEffect(() => {
     latitude === null || longitude === null
-      ? console.log('effect 2')
+      ? console.log('Not Ready')
       : fetch(
           'https://api.openweathermap.org/data/2.5/weather?lat=' +
             latitude +
@@ -34,14 +33,10 @@ const MyProvider = props => {
           .catch(error => console.log(error));
   }, [latitude, longitude, setWeather]);
 
-  const onClick = () => {
-    setToggle(true);
-  };
-
   return (
     <MyContext.Provider
       value={{
-        getLocation: onClick,
+        getLocation: getCoords,
         weather
       }}
     >
