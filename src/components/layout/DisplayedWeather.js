@@ -41,10 +41,16 @@ const Weather = () => {
                       <div className='col-md-6'>
                         <ul>
                           <li>
-                            Sunrise: <Moment unix>{data.sys.sunrise}</Moment>{' '}
+                            Sunrise:{' '}
+                            <Moment format='LLLL' unix>
+                              {data.sys.sunrise}
+                            </Moment>
                           </li>
                           <li>
-                            Sunset: <Moment unix>{data.sys.sunset}</Moment>{' '}
+                            Sunset:{' '}
+                            <Moment format='LLLL' unix>
+                              {data.sys.sunset}
+                            </Moment>
                           </li>
                           <li>
                             Humidity: {data.main.humidity}{' '}
