@@ -59,13 +59,24 @@ const Weather = () => {
                           <li>
                             Atmospheric Pressure: {data.main.pressure} hPa
                           </li>
-                          <li>
-                            Visibility: {Math.round(data.visibility * 0.0006)}{' '}
-                            miles
-                          </li>
+                          {data.visibility === undefined ? (
+                            <li>Visibility: N/A</li>
+                          ) : (
+                            <li>
+                              Visibility: {Math.round(data.visibility * 0.0006)}{' '}
+                              miles
+                            </li>
+                          )}
                           <li>
                             Cloudiness: {data.clouds.all}{' '}
                             <i className='fas fa-percentage' />
+                          </li>
+                          <li>
+                            Weather Condition: {data.weather[0].description}
+                            <img
+                              src={`https://openweathermap.org/img/w/${data.weather[0].icon}.png`}
+                              alt='weather condition'
+                            />
                           </li>
                           {data.weather[0].main === 'Rain' ? (
                             <li>
@@ -75,15 +86,8 @@ const Weather = () => {
                               inches
                             </li>
                           ) : (
-                            <li>Rainfall in the past hour: N/A</li>
+                            <p></p>
                           )}
-                          <li>
-                            Weather Condition: {data.weather[0].description}
-                            <img
-                              src={`https://openweathermap.org/img/w/${data.weather[0].icon}.png`}
-                              alt='weather condition'
-                            />
-                          </li>
                         </ul>
                       </div>
                     </div>
