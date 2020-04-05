@@ -73,11 +73,11 @@ const Weather = () => {
                           </li>
                           <li>
                             Weather Condition: {data.weather[0].description}
+                          </li>
                             <img
-                              src={`https://openweathermap.org/img/w/${data.weather[0].icon}.png`}
+                              src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
                               alt='weather condition'
                             />
-                          </li>
                           {data.weather[0].main === 'Rain' ? (
                             <li>
                               Rainfall in the past hour:{' '}
