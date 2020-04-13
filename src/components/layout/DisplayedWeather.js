@@ -6,9 +6,9 @@ const Weather = () => {
   return (
     <Fragment>
       <MyContext.Consumer>
-        {context => (
+        {(context) => (
           <Fragment>
-            {context.weather.map(data => (
+            {context.weather.map((data) => (
               <Fragment key={data.id}>
                 <div className='card p-4 weatherbg mt-4'>
                   <div className='text-white'>
@@ -74,11 +74,13 @@ const Weather = () => {
                           <li>
                             Weather Condition: {data.weather[0].description}
                           </li>
-                            <img
-                              src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
-                              alt='weather condition'
-                            />
-                          {data.weather[0].main === 'Rain' ? (
+                          <img
+                            src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
+                            alt='weather condition'
+                          />
+                          {data.weather[0].main === 'Rain' ||
+                          'Thunderstorm' ||
+                          'Drizzle' ? (
                             <li>
                               Rainfall in the past hour:{' '}
                               {Math.ceil(data.rain['1h'] * 0.0393 * 1000) /
@@ -86,7 +88,7 @@ const Weather = () => {
                               inches
                             </li>
                           ) : (
-                            <p></p>
+                            <p />
                           )}
                         </ul>
                       </div>
