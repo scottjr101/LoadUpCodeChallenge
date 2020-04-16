@@ -78,9 +78,21 @@ const Weather = () => {
                             src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
                             alt='weather condition'
                           />
-                          {data.weather[0].main === 'Rain' ||
-                          'Thunderstorm' ||
-                          'Drizzle' ? (
+                          {data.weather[0].main === 'Rain' ? (
+                            <li>
+                              Rainfall in the past hour:{' '}
+                              {Math.ceil(data.rain['1h'] * 0.0393 * 1000) /
+                                1000}{' '}
+                              inches
+                            </li>
+                          ) : data.weather[0].main === 'Thunderstorm' ? (
+                            <li>
+                              Rainfall in the past hour:{' '}
+                              {Math.ceil(data.rain['1h'] * 0.0393 * 1000) /
+                                1000}{' '}
+                              inches
+                            </li>
+                          ) : data.weather[0].main === 'Drizzle' ? (
                             <li>
                               Rainfall in the past hour:{' '}
                               {Math.ceil(data.rain['1h'] * 0.0393 * 1000) /
@@ -88,7 +100,7 @@ const Weather = () => {
                               inches
                             </li>
                           ) : (
-                            <p />
+                            <p></p>
                           )}
                         </ul>
                       </div>
