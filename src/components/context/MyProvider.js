@@ -4,15 +4,25 @@ import React, { useState, useEffect, createContext } from 'react';
 const MyContext = createContext();
 
 // Then create a provider Component
-const MyProvider = props => {
+const MyProvider = (props) => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [weather, setWeather] = useState([]);
 
+  // Setup variables for fetch parameter
+  const data = { latitude, longitude };
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  };
+
   const getCoords = () => {
     !window.navigator.geolocation
       ? alert('Geolocation is not supported by your browser')
-      : window.navigator.geolocation.getCurrentPosition(success => {
+      : window.navigator.geolocation.getCurrentPosition((success) => {
           setLatitude(success.coords.latitude);
           setLongitude(success.coords.longitude);
         });
@@ -21,23 +31,18 @@ const MyProvider = props => {
   useEffect(() => {
     latitude === null || longitude === null
       ? console.log('Not Ready')
-      : fetch(
-          'https://api.openweathermap.org/data/2.5/weather?lat=' +
-            latitude +
-            '&lon=' +
-            longitude +
-            '&units=imperial&appid=1eab387463d70063b7d8296fa6d64c9b'
-        )
-          .then(res => res.json())
-          .then(result => setWeather([result]))
-          .catch(error => console.log(error));
-  }, [latitude, longitude, setWeather]);
+      : fetch('https://scottladd.herokuapp.com/weather', options)
+          .then((res) => res.json())
+          .then((result) => setWeather([result]))
+          .catch((error) => console.log(error));
+          // eslint-disable-next-line
+  }, [latitude, longitude]);
 
   return (
     <MyContext.Provider
       value={{
         getLocation: getCoords,
-        weather
+        weather,
       }}
     >
       {props.children}
