@@ -25,7 +25,7 @@ const CurrentWeather = () => {
                   <input
                     type='zipcode'
                     value={context.zipcode}
-                    placeholder='Enter Here'
+                    placeholder='30345'
                     minLength='5'
                     onChange={e => context.onChange(e)}
                   />

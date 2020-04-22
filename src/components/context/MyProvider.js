@@ -15,17 +15,19 @@ const MyProvider = (props) => {
     setZipcode(e.target.value);
   };
 
+  // Setup variables for fetch parameter
+  const code = { zipcode };
+  const payload = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(code),
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const payload = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(zipcode),
-    };
-    // console.log(zipcode);
     fetch('https://scottladd.herokuapp.com/zipcode', payload)
       .then((res) => res.json())
       .then((result) => setWeather([result]))
@@ -58,7 +60,7 @@ const MyProvider = (props) => {
           .then((res) => res.json())
           .then((result) => setWeather([result]))
           .catch((error) => console.log(error));
-          // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [latitude, longitude]);
 
   return (
