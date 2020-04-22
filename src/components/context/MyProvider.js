@@ -8,6 +8,29 @@ const MyProvider = (props) => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [weather, setWeather] = useState([]);
+  const [zipcode, setZipcode] = useState('');
+
+  // By zipcode area
+  const onChange = (e) => {
+    setZipcode(e.target.value);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const payload = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(zipcode),
+    };
+    // console.log(zipcode);
+    fetch('https://scottladd.herokuapp.com/zipcode', payload)
+      .then((res) => res.json())
+      .then((result) => setWeather([result]))
+      .catch((error) => console.log(error));
+  };
 
   // Setup variables for fetch parameter
   const data = { latitude, longitude };
@@ -43,6 +66,9 @@ const MyProvider = (props) => {
       value={{
         getLocation: getCoords,
         weather,
+        zipcode,
+        onChange,
+        onSubmit,
       }}
     >
       {props.children}

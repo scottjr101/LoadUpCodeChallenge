@@ -4,7 +4,7 @@ import { MyContext } from '../context/MyProvider';
 const CurrentWeather = () => {
   return (
     <MyContext.Consumer>
-      {context => (
+      {(context) => (
         <Fragment>
           {/* Card */}
           <div className='card card-image cardbg'>
@@ -19,8 +19,22 @@ const CurrentWeather = () => {
                   className='btn btn-light-blue'
                   onClick={context.getLocation}
                 >
-                  Current Weather <i className='fas fa-cloud-sun-rain' />
+                  By Lat & Long
                 </button>
+                <form onSubmit={e => context.onSubmit(e)}>
+                  <input
+                    type='zipcode'
+                    value={context.zipcode}
+                    placeholder='Enter Here'
+                    minLength='5'
+                    onChange={e => context.onChange(e)}
+                  />
+                  <input
+                    type='submit'
+                    value='Zipcode'
+                    className='btn btn-secondary'
+                  />
+                </form>
               </div>
             </div>
           </div>
