@@ -9,6 +9,7 @@ const MyProvider = (props) => {
   const [longitude, setLongitude] = useState(null);
   const [weather, setWeather] = useState([]);
   const [zipcode, setZipcode] = useState('');
+  const Server = process.env.REACT_APP_SERVER;
 
   // By zipcode area
   const onChange = (e) => {
@@ -28,7 +29,7 @@ const MyProvider = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    fetch('https://scottladd.herokuapp.com/zipcode', payload)
+    fetch(`https://${Server}/zipcode`, payload)
       .then((res) => res.json())
       .then((result) => setWeather([result]))
       .catch((error) => console.log(error));
@@ -56,7 +57,7 @@ const MyProvider = (props) => {
   useEffect(() => {
     latitude === null || longitude === null
       ? console.log('Not Ready')
-      : fetch('https://scottladd.herokuapp.com/weather', options)
+      : fetch(`https://${Server}/weather`, options)
           .then((res) => res.json())
           .then((result) => setWeather([result]))
           .catch((error) => console.log(error));
