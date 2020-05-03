@@ -11,10 +11,8 @@ const App = () => {
       <MyProvider>
         <Fragment>
           <Header />
-          <div className='container my-4'>
-            <CurrentWeather />
-            <Weather />
-          </div>
+          <CurrentWeather />
+          <Weather />
         </Fragment>
       </MyProvider>
     </Fragment>
