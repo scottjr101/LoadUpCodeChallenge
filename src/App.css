@@ -1,22 +1,18 @@
 body {
-  background-image: url('./assets/img/Body-BG.jpg');
-  background-size: cover;
-  background-attachment: fixed;
-}
-.cardbg {
-  background-image: url('./assets/img/Card-BG.jpg');
-  background-size: cover;
-}
-.weatherbg {
-  background-image: url('./assets/img/Weather-BG.jpg');
-  background-size: cover;
+  background-image: url('./assets/img/weather.png');
 }
 @import url('https://fonts.googleapis.com/css?family=Trade+Winds&display=swap');
 .customFont {
   font-family: 'Trade Winds';
   font-size: 3.5rem;
-  color: rgb(0, 63, 180);
+  color: rgb(30, 76, 102);
 }
 li {
   font-size: large;
+}
+a {
+  color: rgb(0, 0, 0);
+}
+a:hover {
+  color: rgb(87, 87, 87);
 }
